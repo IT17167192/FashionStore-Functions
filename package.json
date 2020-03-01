@@ -1,0 +1,11 @@
+{
+  "name": "fashionstore",
+  "version": "1.0.0",
+  "description": "Online fashion store website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Yugma Fernando",
+  "license": "ISC"
+}
