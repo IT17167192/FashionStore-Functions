@@ -30,11 +30,11 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     salt: String,
-    email: {
+    role: {
         type: String,
         default: 0
     },
-    email: {
+    history: {
         type: Array,
         default: []
     }
