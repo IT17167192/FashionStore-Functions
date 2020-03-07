@@ -13,8 +13,11 @@ POST http://localhost:8000/api/signin
 Content-Type: application/json
 
 {
-  "email": "kumaryniks@gmail.com",
-  "password": "kumary123"
+  "email": "fyugma@gmail.com",
+  "password": "yugma123"
 }
+
+###
+GET http://localhost:8000/api/signout
 
 ###
