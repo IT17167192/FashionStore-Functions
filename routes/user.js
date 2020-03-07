@@ -3,11 +3,15 @@ const router = express.Router();
 const {userSignupValidator} = require('../validators');
 
 //controller references
-const { signup, signin, signout } = require("../controllers/user");
-
+const { getUserById } = require("../controllers/user");
+const { AuthMiddleware } = require('../controllers/auth');
 //routes
-router.post("/signup", userSignupValidator, signup);
-router.post("/signin", signin);
-router.get("/signout", signout);
+router.get('/:userId', AuthMiddleware, (req, res) => {
+    res.json({
+        user: req.profile
+    });
+});
+
+router.param('userId', getUserById)
 
 module.exports = router;

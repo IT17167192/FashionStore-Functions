@@ -1,23 +1,7 @@
 ###
-POST http://localhost:8000/api/signup
+GET http://localhost:8000/api/5e626a9b0a936a1b2009628d
 Content-Type: application/json
-
-{
-  "name": "Kumary",
-  "email": "kumaryniks@gmail.com",
-  "password": "kumary123"
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNmE5YjBhOTM2YTFiMjAwOTYyOGQiLCJpYXQiOjE1ODM2MTAwNTF9.gwUvn8Sn21lW0AdgbojvAsCdppOTH0zO6EF-Lj9RK3E
 
 ###
-POST http://localhost:8000/api/signin
-Content-Type: application/json
 
-{
-  "email": "fyugma@gmail.com",
-  "password": "yugma123"
-}
-
-###
-GET http://localhost:8000/api/signout
-
-###

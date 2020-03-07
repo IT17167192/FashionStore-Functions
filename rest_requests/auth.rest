@@ -1,0 +1,23 @@
+###
+POST http://localhost:8000/api/signup
+Content-Type: application/json
+
+{
+  "name": "Kumary",
+  "email": "kumaryniks@gmail.com",
+  "password": "kumary123"
+}
+
+###
+POST http://localhost:8000/api/signin
+Content-Type: application/json
+
+{
+  "email": "fyugma@gmail.com",
+  "password": "yugma123"
+}
+
+###
+GET http://localhost:8000/api/signout
+
+###
