@@ -5,7 +5,6 @@ const {errorHandler} = require('../helpers/dbErrorHandler');
 const nodemailer = require('nodemailer');
 
 exports.signup = (req, res) => {
-    console.log('req.body', req.body)
     const user = new User(req.body);
     user.save((err, user) => {
         if(err){
