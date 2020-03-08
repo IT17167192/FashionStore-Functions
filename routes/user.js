@@ -4,14 +4,18 @@ const {userSignupValidator} = require('../validators');
 
 //controller references
 const { getUserById } = require("../controllers/user");
-const { AuthMiddleware } = require('../controllers/auth');
+const { requiredSignin, isAuth, isAdmin } = require('../controllers/auth');
+
+
 //routes
-router.get('/:userId', AuthMiddleware, (req, res) => {
+//get single user
+router.get('/:userId', requiredSignin, isAuth, isAdmin, (req, res) => {
     res.json({
         user: req.profile
     });
 });
 
-router.param('userId', getUserById)
+//get user id as parameter
+router.param('userId', getUserById);
 
 module.exports = router;

@@ -47,4 +47,29 @@ exports.signout = (req, res) => {
     res.status(200).json({message: 'Signout success!'})
 };
 
-exports.AuthMiddleware = expressJwt({secret: process.env.JWT_SECRET, userProperty: "auth"});
+//signin check middleware
+exports.requiredSignin = expressJwt({secret: process.env.JWT_SECRET, userProperty: "auth"});
+
+//authentication middleware
+exports.isAuth = (req, res, next) => {
+    let user = req.profile && req.auth && req.profile._id == req.auth._id;
+    if(!user){
+        return res.status(403).json({
+            error: "Access denied"
+        });
+    }
+
+    next();
+};
+
+//admin routes authentication middleware
+exports.isAdmin = (req, res, next) => {
+    console.log(req.profile.role === "0");
+    if(req.profile.role === "0"){
+        return res.status(403).json({
+            error: "Not a admin. Access denied!"
+        });
+    }
+
+    next();
+};

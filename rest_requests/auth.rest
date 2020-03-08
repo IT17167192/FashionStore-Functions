@@ -8,7 +8,7 @@ Content-Type: application/json
   "password": "kumary123"
 }
 
-###
+###correct credentials
 POST http://localhost:8000/api/signin
 Content-Type: application/json
 
@@ -17,7 +17,17 @@ Content-Type: application/json
   "password": "yugma123"
 }
 
-###
+###incorrect credentials
+
+POST http://localhost:8000/api/signin
+Content-Type: application/json
+//correct credentials
+{
+  "email": "kumaryniks@gmail.com",
+  "password": "kumary12"
+}
+
+###signout
 GET http://localhost:8000/api/signout
 
 ###
