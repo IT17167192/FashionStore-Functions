@@ -1,4 +1,4 @@
-###
+###User sign up default role == 0
 POST http://localhost:8000/api/signup
 Content-Type: application/json
 
@@ -8,13 +8,54 @@ Content-Type: application/json
   "password": "kumary123"
 }
 
-###correct credentials
+###store manager signup, role == 2 store manager
+POST http://localhost:8000/api/signup
+Content-Type: application/json
+
+{
+  "name": "Yugma Fernando",
+  "email": "yugmafernando@gmail.com",
+  "password": "yugmaFernando123",
+  "role" : 2
+}
+
+###store manager signup, role == 1 admin
+POST http://localhost:8000/api/signup
+Content-Type: application/json
+
+{
+  "name": "Yugma",
+  "email": "fyugma@gmail.com",
+  "password": "yugma123",
+  "role" : 2
+}
+
+###correct credentials sign in storeManager
+POST http://localhost:8000/api/signin
+Content-Type: application/json
+
+{
+  "email": "yugmafernando@gmail.com",
+  "password": "yugmaFernando123"
+}
+
+###correct credentials sign in admin
 POST http://localhost:8000/api/signin
 Content-Type: application/json
 
 {
   "email": "fyugma@gmail.com",
   "password": "yugma123"
+}
+
+###correct credentials normal user
+
+POST http://localhost:8000/api/signin
+Content-Type: application/json
+//correct credentials
+{
+  "email": "kumaryniks@gmail.com",
+  "password": "kumary123"
 }
 
 ###incorrect credentials

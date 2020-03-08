@@ -2,6 +2,7 @@ const User = require("../models/user");
 const jwt = require('jsonwebtoken');//token generation
 const expressJwt = require('express-jwt');//auth check
 const {errorHandler} = require('../helpers/dbErrorHandler');
+const nodemailer = require('nodemailer');
 
 exports.signup = (req, res) => {
     console.log('req.body', req.body)
@@ -16,6 +17,31 @@ exports.signup = (req, res) => {
            user
         });
 
+        if(typeof req.body.role !== 'undefined' && req.body.role === 2){
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user:process.env.EMAIL,
+                    pass:process.env.PASSWORD
+                }
+            });
+
+            let emailOptions = {
+                from: process.env.EMAIL,
+                to: req.body.email,
+                cc: process.env.EMAIL,
+                subject: 'New account detials',
+                text: `Username : ${req.body.email}\nPassword : ${req.body.password}`
+            };
+
+            transporter.sendMail(emailOptions, function (err, success) {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log("Email sent successfully");
+                }
+            });
+        }
     });
 };
 
@@ -64,12 +90,24 @@ exports.isAuth = (req, res, next) => {
 
 //admin routes authentication middleware
 exports.isAdmin = (req, res, next) => {
-    console.log(req.profile.role === "0");
-    if(req.profile.role === "0"){
+    if(req.profile.role === "0" || req.profile.role === "2"){
         return res.status(403).json({
             error: "Not a admin. Access denied!"
         });
     }
 
     next();
+};
+
+//store manager routes authentication middleware
+exports.isStoreManager = (req, res, next) => {
+    if(req.profile.role === "0"){
+        return res.status(403).json({
+            error: "Not a admin. Access denied!"
+        });
+    }
+
+    if(req.profile.role === "1" || req.profile.role === "2"){
+        next();
+    }
 };
