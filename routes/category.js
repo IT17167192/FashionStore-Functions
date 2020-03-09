@@ -8,10 +8,10 @@ const { requiredSignin, isAuth, isAdmin, isStoreManager } = require('../controll
 const { getUserById } = require("../controllers/user");
 
 //routes
-router.post("/category/create/:userId", requiredSignin, isAuth, isAdmin, create, categoryValidator);
+router.post("/category/create/:userId", requiredSignin, categoryValidator, isAuth, isAdmin, isStoreManager, create);
 router.get("/category/:categoryId", readById);
-router.put("/category/:categoryId/:userId", requiredSignin, isAuth, isAdmin, updateById);
-router.delete("/category/:categoryId/:userId", requiredSignin, isAuth, isAdmin, removeById);
+router.put("/category/:categoryId/:userId", requiredSignin, categoryValidator, isAuth, isAdmin, updateById);
+router.delete("/category/:categoryId/:userId", requiredSignin, categoryValidator, isAuth, isAdmin, removeById);
 router.get("/categories", list);
 
 
