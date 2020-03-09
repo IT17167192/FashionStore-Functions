@@ -1,0 +1,10 @@
+###Add new category with admin token admin userID
+POST http://localhost:8000/api/category/create/5e626a9b0a936a1b2009628d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNmE5YjBhOTM2YTFiMjAwOTYyOGQiLCJpYXQiOjE1ODM3MzM4MjF9.OZeVccsCcwOjCEefL992TrUISLnJpVCY4i4zwVXiQx0
+
+{
+  "name": "Menswear"
+}
+
+###
