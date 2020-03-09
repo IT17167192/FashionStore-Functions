@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
     },
     qr: {
         data: Buffer,
-        contentType: Image
+        contentType: String
     },
     takeInMethod: {
         required: false,
