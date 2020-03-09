@@ -130,3 +130,42 @@ exports.update = (req, res) => {
         });
     });
 };
+
+exports.getAllProducts = (req, res) => {
+  let orderBy = req.query.orderBy ? req.query.orderBy:'ASC';
+  let sortBy = req.query.sortBy ? req.query.sortBy:'_id';
+  let limitTo = req.query.limitTo ? parseInt(req.query.limitTo):10;
+
+  Product.find()
+      .select("-image")
+      .populate('category')
+      .sort([[sortBy, orderBy]])
+      .limit(limitTo)
+      .exec((err, data) => {
+          if(err){
+              res.status(400).json({
+                 error: 'Products not found!'
+              });
+          }
+
+          res.json(data);
+      });
+};
+
+exports.getSimilarProduct = (req, res) => {
+    let limitTo = req.query.limitTo ? parseInt(req.query.limitTo):10;
+
+    Product.find({_id: {$ne:req.product}, category: req.product.category})
+        .populate('category', '_id name')
+        .limit(limitTo)
+        .exec((err, data) => {
+           if(err){
+               console.log(err);
+               res.status(400).json({
+                  error: 'Similar products not found'
+               });
+           }
+
+           res.json(data);
+        });
+};

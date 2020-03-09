@@ -32,7 +32,11 @@ const productSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
-        required: true,
+        required: true
+    },
+    sold: {
+        type: Number,
+        default: 0
     },
     image: {
         data: Buffer,

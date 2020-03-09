@@ -1,16 +1,16 @@
 ###access user data with correct user id not an admin
-GET http://localhost:8000/api/5e64ba431af2bb49e0ce5be8
+GET http://localhost:8000/api/secret/5e64ba431af2bb49e0ce5be8
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTY0YmE0MzFhZjJiYjQ5ZTBjZTViZTgiLCJpYXQiOjE1ODM2NjAyOTB9.tYj2D46RZvJLlZARTJb_C6RHUuintlrC2k2iPXcyuoQ
 
 ###access denied
 ###token with another user
-GET http://localhost:8000/api/5e626a9b0a936a1b2009628d
+GET http://localhost:8000/api/secret/5e626a9b0a936a1b2009628d
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNzVjNTExNWI3YzA4NWMzOTkzNTciLCJpYXQiOjE1ODM2NDYwNDF9.4DAu6DYhpZ_s7YWaDtti26OIpunx9e4YAxlgwOu6A4I
 
 ###access user data with correct user id an admin
-GET http://localhost:8000/api/5e626a9b0a936a1b2009628d
+GET http://localhost:8000/api/secret/5e626a9b0a936a1b2009628d
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNmE5YjBhOTM2YTFiMjAwOTYyOGQiLCJpYXQiOjE1ODM2NDc1MjJ9.Lgu7MKm0G6uStJ41kW5CmMg_MBf_NwS3hPtDPeIUNZU
 

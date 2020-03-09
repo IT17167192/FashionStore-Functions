@@ -1,3 +1,24 @@
 ###read products
 GET http://localhost:8000/api/product/5e65efc9d35eab041cfe0fa2
 ###
+
+###get all products
+GET http://localhost:8000/api/products
+
+###
+
+###get all products with search params
+GET http://localhost:8000/api/products?sortBy=sold&orderBy=desc&limitTo=4
+###
+
+###get all products with search params
+GET http://localhost:8000/api/products?sortBy=sold&orderBy=desc
+###
+
+###get all products with search params
+GET http://localhost:8000/api/products?sortBy=sold
+
+###get similar products
+GET http://localhost:8000/api/products/similar/5e662bbdf4bb243864cb0253
+
+###
