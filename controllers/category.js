@@ -34,6 +34,7 @@ exports.readById = (req, res) => {
     return res.json(req.category);
 };
 
+//update Category Using the ID
 exports.updateById = (req, res) => {
     const category = req.category;
     category.name = req.body.name;
@@ -47,6 +48,7 @@ exports.updateById = (req, res) => {
     });
 };
 
+//Delete Category by ID
 exports.removeById = (req, res) => {
     const category = req.category;
     category.remove((err, data) => {
@@ -61,6 +63,7 @@ exports.removeById = (req, res) => {
     });
 };
 
+//Get all categories
 exports.list = (req, res) => {
     Category.find().exec((err, data) => {
         if(err){
