@@ -3,7 +3,8 @@ const router = express.Router();
 const {userSignupValidator} = require('../validators');
 
 //controller references
-const { create, getProductById, read, remove, update, getAllProducts, getSimilarProduct } = require("../controllers/product");
+const { create, getProductById, read, remove, update
+    , getAllProducts, getSimilarProduct, getProductCategories, getProductListBySearch, getImage } = require("../controllers/product");
 const { requiredSignin, isAuth, isAdmin, isStoreManager } = require('../controllers/auth');
 const { getUserById } = require("../controllers/user");
 
@@ -16,9 +17,15 @@ router.put('/product/:productId/:userId', requiredSignin, isAuth, isStoreManager
 //search routes
 router.get('/products', getAllProducts);
 router.get('/products/similar/:productId', getSimilarProduct);
+router.get('/products/categories', getProductCategories);
+router.post("/products/by/search", getProductListBySearch);
+router.get('/product/image/:productId', getImage);
+
 
 //read by
 router.param("userId", getUserById);
 router.param("productId", getProductById);
+
+
 
 module.exports = router;

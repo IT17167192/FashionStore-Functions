@@ -160,7 +160,6 @@ exports.getSimilarProduct = (req, res) => {
         .limit(limitTo)
         .exec((err, data) => {
            if(err){
-               console.log(err);
                res.status(400).json({
                   error: 'Similar products not found'
                });
@@ -168,4 +167,67 @@ exports.getSimilarProduct = (req, res) => {
 
            res.json(data);
         });
+};
+
+exports.getProductCategories = (req, res) => {
+  Product.distinct("category", {}, (err, data) => {
+      if(err){
+          res.status(400).json({
+              error: 'Categories not found!'
+          });
+      }
+
+      res.json(data);
+  });
+};
+
+exports.getProductListBySearch = (req, res) => {
+    let orderBy = req.body.orderBy ? req.body.orderBy : "desc";
+    let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
+    let limitTo = req.body.limitTo ? parseInt(req.body.limitTo) : 100;
+    let skip = parseInt(req.body.skip);
+    let findArgs = {};
+
+    for (let key in req.body.filters) {
+        if (req.body.filters[key].length > 0) {
+            if (key === "price") {
+                // gte -  greater than price [0-10]
+                // lte - less than
+                findArgs[key] = {
+                    $gte: req.body.filters[key][0],
+                    $lte: req.body.filters[key][1]
+                };
+            } else {
+                findArgs[key] = req.body.filters[key];
+            }
+        }
+    }
+
+    Product.find(findArgs)
+        .select("-image")
+        .populate("category")
+        .sort([[sortBy, orderBy]])
+        .skip(skip)
+        .limit(limitTo)
+        .exec((err, data) => {
+            if (err) {
+                return res.status(400).json({
+                    error: "Products not found"
+                });
+            }
+            res.json({
+                size: data.length,
+                data
+            });
+        });
+};
+
+exports.getImage = (req, res, next) => {
+
+    if(req.product.image.data){
+        res.set('Content-Type', req.product.image.contentType);
+        return res.send(req.product.image.data);
+    }
+
+    next();
 };

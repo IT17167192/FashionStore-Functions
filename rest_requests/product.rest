@@ -22,3 +22,16 @@ GET http://localhost:8000/api/products?sortBy=sold
 GET http://localhost:8000/api/products/similar/5e662bbdf4bb243864cb0253
 
 ###
+
+###get Categories
+GET http://localhost:8000/api/products/categories
+
+###get products by search
+POST http://localhost:8000/api/products/by/search
+
+###
+
+###get image from product id
+GET http://localhost:8000/api/product/image/5e662c41f4bb243864cb0256
+
+###
