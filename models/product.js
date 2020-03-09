@@ -38,10 +38,6 @@ const productSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String
     },
-    qr: {
-        data: Buffer,
-        contentType: String
-    },
     takeInMethod: {
         required: false,
         type: Boolean

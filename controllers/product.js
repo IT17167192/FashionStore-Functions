@@ -34,10 +34,10 @@ exports.create = (req, res) => {
         }
 
         // Check for all the variables
-        const {name, description, category, price, currency, quantity, qr, takeInMethod} = fields;
+        const {name, description, category, price, currency, quantity, takeInMethod} = fields;
 
         // Validating the variables
-        if(!name || !description || !category || !price || !currency || !quantity || !qr || !takeInMethod){
+        if(!name || !description || !category || !price || !currency || !quantity || !takeInMethod){
             return res.status(400).json({
                 error: "Complete all fields!"
             });
@@ -93,10 +93,10 @@ exports.update = (req, res) => {
         }
 
         // Check for all the variables
-        const {name, description, category, price, currency, quantity, qr, takeInMethod} = fields;
+        const {name, description, category, price, currency, quantity, takeInMethod} = fields;
 
         // Validating the variables
-        if(!name || !description || !category || !price || !currency || !quantity || !qr || !takeInMethod){
+        if(!name || !description || !category || !price || !currency || !quantity || !takeInMethod){
             return res.status(400).json({
                 error: "Complete all fields!"
             });

@@ -9,9 +9,9 @@ const { getUserById } = require("../controllers/user");
 
 //routes
 router.get("/product/:productId", read); // Read Product - get request
-router.post("/product/create:userId", requiredSignin, isAuth, isAdmin, create); // Create Product - post request
+router.post("/product/create/:userId", requiredSignin, isAuth, isStoreManager, create); // Create Product - post request
 router.delete('/product/:productId/:userId', requiredSignin, isAuth, isAdmin, remove); // Delete Product - delete request
-router.put('/product/:productId/:userId', requiredSignin, isAuth, isAdmin, update); // Update Product - put request
+router.put('/product/:productId/:userId', requiredSignin, isAuth, isStoreManager, update); // Update Product - put request
 
 //read by
 router.param("userId", getUserById);
