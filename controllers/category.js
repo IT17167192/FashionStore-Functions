@@ -33,3 +33,42 @@ exports.getCategoryById = (req, res, next, id)  => {
 exports.readById = (req, res) => {
     return res.json(req.category);
 };
+
+exports.updateById = (req, res) => {
+    const category = req.category;
+    category.name = req.body.name;
+    category.save((err, data) => {
+        if(err){
+            return res.status(400).json({
+                error:errorHandler(err)
+            });
+        }
+        res.json(data);
+    });
+};
+
+exports.removeById = (req, res) => {
+    const category = req.category;
+    category.remove((err, data) => {
+        if(err){
+            return res.status(400).json({
+                error:errorHandler(err)
+            });
+        }
+        res.json({
+            message: "Category deleted"
+        });
+    });
+};
+
+exports.list = (req, res) => {
+    Category.find().exec((err, data) => {
+        if(err){
+            return res.status(400).json({
+                error:errorHandler(err)
+            });
+        }
+        res.json(data);
+
+    });
+};

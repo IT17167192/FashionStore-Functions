@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {ObjectId} = mongoose.Schema
+const {ObjectId} = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
     name: {
@@ -40,7 +40,7 @@ const productSchema = new mongoose.Schema({
     },
     qr: {
         data: Buffer,
-        contentType: Image
+        contentType: String
     },
     takeInMethod: {
         required: false,
