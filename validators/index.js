@@ -25,3 +25,19 @@ exports.userSignupValidator = (req, res, next) => {
   }
   next();
 };
+
+exports.categoryValidator = (req, res, next) => {
+    req.check('name', 'Category must be added!').notEmpty()
+        .isLength({
+            min: 1,
+        })
+        .withMessage('Category name cannot be empty')
+
+    const catErr = req.validationErrors();
+
+    if(catErr){
+        const catNameError = catErr.map(catErr => catErr.msg)[0];
+        return res.status(400).json({error: catNameError});
+    }
+    next();
+};

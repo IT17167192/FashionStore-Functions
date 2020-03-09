@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {userSignupValidator} = require('../validators');
+const {categoryValidator} = require('../validators');
 
 //controller references
 const { create, getCategoryById, readById, updateById, removeById, list } = require("../controllers/category");
@@ -8,10 +8,10 @@ const { requiredSignin, isAuth, isAdmin, isStoreManager } = require('../controll
 const { getUserById } = require("../controllers/user");
 
 //routes
-router.post("/category/create/:userId", requiredSignin, isAuth, isAdmin, create);
+router.post("/category/create/:userId", requiredSignin, isAuth, isAdmin, create, categoryValidator);
 router.get("/category/:categoryId", readById);
-router.put("/category/:categoryId/:userId", requiredSignin, isAuth, isAdmin, updateById);
-router.put("/category/:categoryId/:userId", requiredSignin, isAuth, isAdmin, removeById);
+router.put("/category/:categoryId/:userId", requiredSignin, isAuth, isAdmin, updateById, categoryValidator);
+router.put("/category/:categoryId/:userId", requiredSignin, isAuth, isAdmin, removeById, categoryValidator);
 router.get("/categories", list);
 
 
