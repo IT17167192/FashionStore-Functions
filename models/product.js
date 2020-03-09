@@ -41,6 +41,10 @@ const productSchema = new mongoose.Schema({
     takeInMethod: {
         required: false,
         type: Boolean
+    },
+    discount:{
+        type: Number,
+        default: 0.00
     }
 }, {timestamps: true});
 
