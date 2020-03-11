@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //controller references
-const { getUserById } = require("../controllers/user");
+const { getUserById, read, update } = require("../controllers/user");
 const { requiredSignin, isAuth, isStoreManager } = require('../controllers/auth');
 
 
@@ -15,6 +15,10 @@ router.get('/secret/:userId', requiredSignin, isAuth, isStoreManager, (req, res)
         user: req.profile
     });
 });
+
+router.get('/user/:userId', requiredSignin, isAuth, read);
+
+router.put('/user/:userId', requiredSignin, isAuth, update);
 
 //get user id as parameter
 router.param('userId', getUserById);
