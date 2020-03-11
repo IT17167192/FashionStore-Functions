@@ -27,7 +27,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNmE5YjBhOTM2YTFiMjAwOTYyOGQiLCJpYXQiOjE1ODM2NDc1MjJ9.Lgu7MKm0G6uStJ41kW5CmMg_MBf_NwS3hPtDPeIUNZU
 
 {
-  "name": "YUGMA"
+  "name": "Yugma"
 }
 
 ###
