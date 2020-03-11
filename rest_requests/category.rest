@@ -4,7 +4,7 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNmE5YjBhOTM2YTFiMjAwOTYyOGQiLCJpYXQiOjE1ODM3MzM4MjF9.OZeVccsCcwOjCEefL992TrUISLnJpVCY4i4zwVXiQx0
 
 {
-  "name": "#@$ "
+  "name": "#@$"
 }
 ### success
 
