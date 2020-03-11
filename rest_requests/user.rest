@@ -27,7 +27,16 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNmE5YjBhOTM2YTFiMjAwOTYyOGQiLCJpYXQiOjE1ODM2NDc1MjJ9.Lgu7MKm0G6uStJ41kW5CmMg_MBf_NwS3hPtDPeIUNZU
 
 {
-  "name": "Yugma"
+  "name": "Yugma Primalka"
+}
+
+###update user data with correct user and normal user
+PUT http://localhost:8000/api/user/5e6275c5115b7c085c399357
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNzVjNTExNWI3YzA4NWMzOTkzNTciLCJpYXQiOjE1ODM5NTA2NTV9.QnSduV_t_6cVRsJjCScFcQPNfY6xFPSQBYPJQ8Zo3nc
+
+{
+  "name": "Kumary Sirikumara"
 }
 
 ###
