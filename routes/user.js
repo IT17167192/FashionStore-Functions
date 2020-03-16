@@ -17,7 +17,6 @@ router.get('/secret/:userId', requiredSignin, isAuth, isStoreManager, (req, res)
 });
 
 router.get('/user/:userId', requiredSignin, isAuth, read);
-
 router.put('/user/:userId', requiredSignin, isAuth, update);
 
 //get user id as parameter
