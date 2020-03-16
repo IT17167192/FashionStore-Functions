@@ -32,7 +32,9 @@ exports.update = (req, res) => {
     if (req.body.email != null) {
         updateSet.$set.email = req.body.email
     }
-
+    if (req.body.product != null) {
+        updateSet.$addToSet.product = req.body.product
+    }
     console.log(updateSet);
     User.findOneAndUpdate({_id: req.profile._id}, updateSet, {new: true}, (err, user) => {
         if (err) {
