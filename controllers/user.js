@@ -1,4 +1,5 @@
 const User = require('../models/user');
+var mongoose = require('mongoose')
 
 exports.getUserById = (req, res, next, id) => {
     User.findById(id).populate('product').exec((err, user) => {
@@ -11,6 +12,26 @@ exports.getUserById = (req, res, next, id) => {
         req.profile = user;
         next();
     });
+};
+
+exports.removeItemById = (req, res) => {
+    console.log(req.profile._id);
+    console.log(req.body.deleteId);
+    console.log("Hii");
+
+    User.updateOne(
+            {_id: req.profile._id},
+            { $pull: {product: req.body._id} },
+            { safe: true, multi:true },
+            function(err, obj) {
+                console.log(err);
+            }
+        )
+        .then( err => {
+            return res.status(400).json({
+                error: 'Unauthorized Action!'
+            })
+        });
 };
 
 exports.read = (req, res) => {
