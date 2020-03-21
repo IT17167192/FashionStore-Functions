@@ -42,7 +42,7 @@ exports.read = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    let updateSet = {$set: {}, $addToSet: {}};
+    let updateSet = {$set: {}, $addToSet: {}};  //add to set used to not to replace existing cart items
 
     if (req.body.name != null) {
         updateSet.$set.name = req.body.name
@@ -53,6 +53,7 @@ exports.update = (req, res) => {
     if (req.body.email != null) {
         updateSet.$set.email = req.body.email
     }
+    //adding products to the shopping cart
     if (req.body.product != null) {
         updateSet.$addToSet.product = req.body.product
     }
