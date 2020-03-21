@@ -56,7 +56,7 @@ exports.update = (req, res) => {
     if (req.body.product != null) {
         updateSet.$addToSet.product = req.body.product
     }
-    console.log(updateSet);
+
     User.findOneAndUpdate({_id: req.profile._id}, updateSet, {new: true}, (err, user) => {
         if (err) {
             return res.status(400).json({
