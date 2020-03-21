@@ -1,5 +1,4 @@
 const User = require('../models/user');
-var mongoose = require('mongoose')
 
 exports.getUserById = (req, res, next, id) => {
     User.findById(id).populate('product').exec((err, user) => {
@@ -41,6 +40,7 @@ exports.read = (req, res) => {
     return res.json(req.profile);
 };
 
+//method to update users using requests
 exports.update = (req, res) => {
     let updateSet = {$set: {}, $addToSet: {}};  //add to set used to not to replace existing cart items
 
