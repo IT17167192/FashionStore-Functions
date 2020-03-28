@@ -14,23 +14,18 @@ exports.getUserById = (req, res, next, id) => {
 };
 
 exports.removeItemById = (req, res) => {
-    console.log(req.profile._id);
-    console.log(req.body.deleteId);
-    console.log("Hii");
-
     User.updateOne(
             {_id: req.profile._id},
             { $pull: {product: req.body._id} },
-            { safe: true, multi:true },
-            function(err, obj) {
-                console.log(err);
-            }
+            { safe: true, multi:true }
         )
-        .then( err => {
-            return res.status(400).json({
-                error: 'Unauthorized Action!'
-            })
-        });
+        .exec((err, user) => {
+            if (err || !user) {
+                res.status(400).json({
+                    error: 'Unauthorized Action!'
+                });
+            }
+        })
 };
 
 exports.read = (req, res) => {
