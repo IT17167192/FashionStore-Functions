@@ -52,6 +52,9 @@ exports.update = (req, res) => {
     if (req.body.product != null) {
         updateSet.$addToSet.product = req.body.product
     }
+    if (req.body.wishlist != null) {
+        updateSet.$addToSet.wishlist = req.body.wishlist
+    }
 
     User.findOneAndUpdate({_id: req.profile._id}, updateSet, {new: true}, (err, user) => {
         if (err) {
