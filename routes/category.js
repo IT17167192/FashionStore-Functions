@@ -14,7 +14,7 @@ router.put("/category/:categoryId/:userId", requiredSignin, categoryValidator, i
 router.delete("/category/:categoryId/:userId", requiredSignin, categoryValidator, isAuth, isAdmin, removeById);
 router.get("/categories", list);
 
-
+//routes for userID and categoryID
 router.param('userId', getUserById);// Whenever userId is called, getUserById executes
 router.param('categoryId', getCategoryById);// Whenever categoryId is called, getCategoryById executes
 module.exports = router;
