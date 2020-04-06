@@ -24,13 +24,12 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    email: {
-        type: String,
-        trim: true,
-        required: true,
-        unique: true
-    },
     product: [{
+        type: ObjectId,
+        ref: 'Product',
+        required: false
+    }],
+    wishlist: [{
         type: ObjectId,
         ref: 'Product',
         required: false
