@@ -19,6 +19,18 @@ Content-Type: application/json
   "role" : 2
 }
 
+###store manager signup, role == 2 store manager
+POST http://localhost:8000/api/adminUser/create/5e626a9b0a936a1b2009628d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNmE5YjBhOTM2YTFiMjAwOTYyOGQiLCJpYXQiOjE1ODYxOTcyNjN9.0StL4tqvI7OQUpCl1c0CXHfGCvfuc3yyR6Lld-zjwrc
+
+{
+  "name": "Manager",
+  "email": "dsalertmessage@gmail.com",
+  "password": "1234567",
+  "role" : 2
+}
+
 ###store manager signup, role == 1 admin
 POST http://localhost:8000/api/signup
 Content-Type: application/json
