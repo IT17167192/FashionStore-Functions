@@ -182,7 +182,7 @@ exports.getProductCategories = (req, res) => {
 };
 
 exports.getProductListBySearch = (req, res) => {
-    let orderBy = req.body.orderBy ? req.body.orderBy : "desc";
+    let orderBy = req.body.orderBy ? req.body.orderBy : "asc";
     let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
     let limitTo = req.body.limitTo ? parseInt(req.body.limitTo) : 100;
     let skip = parseInt(req.body.skip);
