@@ -1,0 +1,6 @@
+###getting client token
+GET http://localhost:8000/api/braintree/getToken/5e626a9b0a936a1b2009628d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNmE5YjBhOTM2YTFiMjAwOTYyOGQiLCJpYXQiOjE1ODcyOTE1ODd9.-sgK4yO4WcJFXl6QuHsM15I5O6FJWhrDztNxkYJ2CuI
+
+###
