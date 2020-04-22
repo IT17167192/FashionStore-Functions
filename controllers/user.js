@@ -15,10 +15,10 @@ exports.getUserById = (req, res, next, id) => {
 
 exports.removeItemById = (req, res) => {
     User.updateOne(
-            {_id: req.profile._id},
-            { $pull: {product: req.body._id} },
-            { safe: true, multi:true }
-        )
+        {_id: req.profile._id},
+        {$pull: {product: req.body._id}},
+        {safe: true, multi: true}
+    )
         .exec((err, user) => {
             if (err || !user) {
                 res.status(400).json({

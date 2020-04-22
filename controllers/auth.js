@@ -29,7 +29,7 @@ exports.signup = (req, res) => {
                 from: process.env.EMAIL,
                 to: req.body.email,
                 cc: process.env.EMAIL,
-                subject: 'New account detials',
+                subject: 'New account details',
                 text: `Username : ${req.body.email}\nPassword : ${req.body.password}`
             };
 
