@@ -49,7 +49,11 @@ const productSchema = new mongoose.Schema({
     discount:{
         type: Number,
         default: 0.00
-    }
+    },
+    rating: [{
+        type: Number,
+        required: false
+    }]
 }, {timestamps: true});
 
 module.exports = mongoose.model("Product", productSchema);

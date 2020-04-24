@@ -131,6 +131,27 @@ exports.update = (req, res) => {
     });
 };
 
+exports.addRating = (req, res) => {
+    let updateSet = {$addToSet: {}};  //add to set used to not to replace existing rates
+
+    //adding rating to the product
+    if (req.body.rating != null) {
+        updateSet.$addToSet.rating = req.body.rating;
+    }
+
+    console.log(req.product._id);
+
+    Product.findOneAndUpdate({_id: req.product._id}, updateSet, {new: true}, (err, product) => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            })
+        }
+
+        res.json(product);
+    });
+};
+
 exports.getAllProducts = (req, res) => {
   let orderBy = req.query.orderBy ? req.query.orderBy:'ASC';
   let sortBy = req.query.sortBy ? req.query.sortBy:'_id';
