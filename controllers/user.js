@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../models/users');
 
 exports.getUserById = (req, res, next, id) => {
     User.findById(id).populate('product').exec((err, user) => {

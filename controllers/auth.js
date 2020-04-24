@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/users");
 const jwt = require('jsonwebtoken');//token generation
 const expressJwt = require('express-jwt');//auth check
 const {errorHandler} = require('../helpers/dbErrorHandler');
