@@ -132,11 +132,11 @@ exports.update = (req, res) => {
 };
 
 exports.addRating = (req, res) => {
-    let updateSet = {$addToSet: {}};  //add to set used to not to replace existing rates
+    let updateSet = {$push: {}};  //add to set used to not to replace existing rates
 
     //adding rating to the product
     if (req.body.rating != null) {
-        updateSet.$addToSet.rating = req.body.rating;
+        updateSet.$push.rating = req.body.rating;
     }
 
     console.log(req.product._id);
