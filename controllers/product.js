@@ -5,7 +5,7 @@ const fs = require('fs');
 const {errorHandler} = require('../helpers/dbErrorHandler');
 
 exports.getProductById = (req, res, next, id) => {
-    Product.findById(id).populate('category').exec((err, product) => {
+    Product.findById(id).populate('category').populate('comments.user').exec((err, product) => {
         if(err || !product){
             return res.status(400).json({
                 error: "Product could not be found"
@@ -140,6 +140,32 @@ exports.addRating = (req, res) => {
     }
 
     console.log(req.product._id);
+
+    Product.findOneAndUpdate({_id: req.product._id}, updateSet, {new: true}, (err, product) => {
+        if (err) {
+            return res.status(400).json({
+                error: errorHandler(err)
+            })
+        }
+
+        res.json(product);
+    });
+};
+
+exports.addComment = (req, res) => {
+    let updateSet = {$push: {}};  //add to set used to not to replace existing rates
+
+    //adding rating to the product
+    if (req.body.comments != null) {
+        const comments =  {
+            "user" : req.body.comments.user,
+            "comment" : req.body.comments.comment,
+            "addedOn": new Date()
+        };
+
+        updateSet.$push.comments = comments;
+    }
+
 
     Product.findOneAndUpdate({_id: req.product._id}, updateSet, {new: true}, (err, product) => {
         if (err) {

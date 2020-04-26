@@ -1,17 +1,30 @@
 ###read products
-GET http://localhost:8000/api/product/5e66001e1ea5474354484df4
+GET http://localhost:8000/api/product/5e6dd9565fd2043d846a8d11
 ###
 
 ###get all products
 GET http://localhost:8000/api/products
 
-###update user data with correct user and admin
+###Add rating to the product
 PUT http://localhost:8000/api/product/addRating/5e65efc9d35eab041cfe0fa2/5e6275c5115b7c085c399357
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNzVjNTExNWI3YzA4NWMzOTkzNTciLCJpYXQiOjE1ODc3NDg3Mzh9.abB7wISA_AR9Ns_dqnSMWhWid-ZRXmA14TLm9AmB_qw
 
 {
   "rating": 5
+}
+
+###
+###Add rating to the product
+PUT http://localhost:8000/api/product/addComment/5e6dd9565fd2043d846a8d11/5e6275c5115b7c085c399357
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTYyNzVjNTExNWI3YzA4NWMzOTkzNTciLCJpYXQiOjE1ODc4MDc2NzV9.CRlzxtALQNgjxHGn7HByAKRjfY-zdOSRjA-5EagvUUQ
+
+{
+  "comments": {
+    "user": "5e6275c5115b7c085c399357",
+    "comment" : "My Second Comment"
+  }
 }
 
 ###

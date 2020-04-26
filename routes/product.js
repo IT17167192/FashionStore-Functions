@@ -3,7 +3,7 @@ const router = express.Router();
 const {userSignupValidator} = require('../validators');
 
 //controller references
-const { create, getProductById, read, remove, update, addRating
+const { create, getProductById, read, remove, update, addRating, addComment
     , getAllProducts, getSimilarProduct, getProductCategories, getProductListBySearch, getImage } = require("../controllers/product");
 const { requiredSignin, isAuth, isAdmin, isStoreManager } = require('../controllers/auth');
 const { getUserById } = require("../controllers/user");
@@ -14,6 +14,7 @@ router.post("/product/create/:userId", requiredSignin, isAuth, isStoreManager, c
 router.delete('/product/:productId/:userId', requiredSignin, isAuth, isAdmin, remove); // Delete Product - delete request
 router.put('/product/:productId/:userId', requiredSignin, isAuth, isStoreManager, update); // Update Product - put request
 router.put('/product/addRating/:productId/:userId', requiredSignin, isAuth, addRating); // add Rating to a product - put request
+router.put('/product/addComment/:productId/:userId', requiredSignin, isAuth, addComment); // add Rating to a product - put request
 
 //search routes
 router.get('/products', getAllProducts);
