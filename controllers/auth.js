@@ -43,10 +43,11 @@ exports.signup = (req, res) => {
                 to: req.body.email,
                 cc: process.env.EMAIL,
                 subject: 'New account details',
-                template: 'index',
+                template: 'email_view',
                 context: {
                     username: req.body.email,
-                    password: req.body.password
+                    password: req.body.password,
+                    name: req.body.name
                 }
             };
 
