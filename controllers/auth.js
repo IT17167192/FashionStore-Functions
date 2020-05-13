@@ -1,5 +1,6 @@
 const User = require("../models/users");
 const jwt = require('jsonwebtoken');//token generation
+const request = require('request');
 const expressJwt = require('express-jwt');//auth check
 const {errorHandler} = require('../helpers/dbErrorHandler');
 const nodemailer = require('nodemailer');
@@ -129,3 +130,47 @@ exports.isStoreManager = (req, res, next) => {
         next();
     }
 };
+
+exports.newsletterSignUp = (req, res) => {
+    const email = req.body.email;
+    console.log(email);
+    if(!email){
+        return res.status(401).json({
+            error: "Email required"
+        });
+    }
+
+    const data = {
+      members: [{
+          email_address: email,
+          status: 'subscribed',
+      }]
+    };
+
+    const postData = JSON.stringify(data);
+
+    const options = {
+        url: 'https://us18.api.mailchimp.com/3.0/lists/21eefe5bcb',
+        method: 'POST',
+        headers: {
+            Authorization: 'auth 70cf7b8e9292591bcbc47201fb4a387b-us18'
+        },
+        body: postData
+    };
+
+    request(options, (err, response, body) => {
+       if(err){
+           return res.status(401).json({
+               error: "Error in network connection!"
+           });
+       }else{
+           if(response.statusCode = 200){
+               res.json(body);
+           }else{
+               return res.status(401).json({
+                   error: "Error in network connection!"
+               });
+           }
+       }
+    });
+}
