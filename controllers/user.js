@@ -48,6 +48,12 @@ exports.update = (req, res) => {
     if (req.body.email != null) {
         updateSet.$set.email = req.body.email
     }
+    if (req.body.address1 != null) {
+        updateSet.$set.address1 = req.body.address1;
+        updateSet.$set.address2 = req.body.address2;
+        updateSet.$set.town = req.body.town;
+        updateSet.$set.mobile = req.body.mobile;
+    }
     //adding products to the shopping cart
     if (req.body.product != null) {
         updateSet.$addToSet.product = req.body.product
