@@ -17,15 +17,24 @@ exports.removeItemById = (req, res) => {
     User.updateOne(
         {_id: req.profile._id},
         {$pull: {product: req.body._id}},
-        {safe: true, multi: true}
-    )
-        .exec((err, user) => {
-            if (err || !user) {
-                res.status(400).json({
-                    error: 'Unauthorized Action!'
-                });
-            }
+        {safe: true, multi: true},
+
+        function (err) {
+            if (err) return res.send(500, {error: err});
+            return res.send(200, {success: 'Successfully Removed.'});
         })
+};
+
+exports.removeWishListItem = (req, res) => {
+    User.updateOne(
+        {_id: req.profile._id},
+        {$pull: {wishlist: req.body._id}},
+        {safe: true, multi: true},
+
+        function (err) {
+        if (err) return res.send(500, {error: err});
+        return res.send(200, {success: 'Successfully Removed.'});
+    })
 };
 
 exports.read = (req, res) => {
@@ -59,7 +68,28 @@ exports.update = (req, res) => {
         updateSet.$addToSet.product = req.body.product
     }
     if (req.body.wishlist != null) {
-        updateSet.$addToSet.wishlist = req.body.wishlist
+        updateSet.$addToSet.wishlist = req.body.product
+    }
+
+    User.findOneAndUpdate({_id: req.profile._id}, updateSet, {new: true}, (err, user) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'Unauthorized Action!'
+            })
+        }
+
+        user.hashed_password = undefined;
+        user.salt = undefined;
+
+        res.json(user);
+    });
+};
+
+exports.updateWishList = (req, res) => {
+    let updateSet = {$addToSet: {}};  //add to set used to not to replace existing cart items
+
+    if (req.body.product != null) {
+        updateSet.$addToSet.wishlist = req.body.product
     }
 
     User.findOneAndUpdate({_id: req.profile._id}, updateSet, {new: true}, (err, user) => {
