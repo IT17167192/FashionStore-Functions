@@ -16,12 +16,12 @@ router.get('/secret/:userId', requiredSignin, isAuth, isStoreManager, (req, res)
     });
 });
 
-router.get('/user/:userId', requiredSignin, isAuth, read);
-router.get('/address/:userId', requiredSignin, isAuth, address);
-router.put('/user/:userId', requiredSignin, isAuth, update);
-router.put('/wishlist/:userId', requiredSignin, isAuth, updateWishList);
-router.post('/cart/remove/:userId', requiredSignin, isAuth, removeItemById);
-router.post('/wishlist/remove/:userId', requiredSignin, isAuth, removeWishListItem);
+router.get('/user/:userId', requiredSignin, isAuth, read);  //url to get user profile
+router.get('/address/:userId', requiredSignin, isAuth, address);    //to get user address
+router.put('/user/:userId', requiredSignin, isAuth, update);    //to update user details
+router.put('/wishlist/:userId', requiredSignin, isAuth, updateWishList);    //to update wishlist
+router.post('/cart/remove/:userId', requiredSignin, isAuth, removeItemById);    //to remove cart items
+router.post('/wishlist/remove/:userId', requiredSignin, isAuth, removeWishListItem);    //to remove wishlist items
 
 //get user id as parameter
 router.param('userId', getUserById);
