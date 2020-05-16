@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema({
     town: {
         type: String
     },
+    postal_code: {
+        type: String
+    },
     mobile: {
         type: String
     },

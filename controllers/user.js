@@ -32,9 +32,9 @@ exports.removeWishListItem = (req, res) => {
         {safe: true, multi: true},
 
         function (err) {
-        if (err) return res.send(500, {error: err});
-        return res.send(200, {success: 'Successfully Removed.'});
-    })
+            if (err) return res.send(500, {error: err});
+            return res.send(200, {success: 'Successfully Removed.'});
+        })
 };
 
 exports.read = (req, res) => {
@@ -42,6 +42,19 @@ exports.read = (req, res) => {
     req.profile.salt = undefined;
 
     return res.json(req.profile);
+};
+
+exports.address = (req, res) => {
+    req.profile.hashed_password = undefined;
+    req.profile.salt = undefined;
+
+    return res.json({
+        address1: req.profile.address1,
+        address2: req.profile.address2,
+        town: req.profile.town,
+        postal_code: req.profile.postal_code,
+        mobile: req.profile.mobile
+    });
 };
 
 //method to update users using requests
@@ -61,6 +74,7 @@ exports.update = (req, res) => {
         updateSet.$set.address1 = req.body.address1;
         updateSet.$set.address2 = req.body.address2;
         updateSet.$set.town = req.body.town;
+        updateSet.$set.postal_code = req.body.postal_code;
         updateSet.$set.mobile = req.body.mobile;
     }
     //adding products to the shopping cart
