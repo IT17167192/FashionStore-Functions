@@ -110,6 +110,7 @@ exports.update = (req, res) => {
 
         // Image validation
         if(files.image){
+
             if(files.image.size > 5000000){
                 return res.status(400).json({
                     error: "Image size is too large. Upload an image <5MB"
