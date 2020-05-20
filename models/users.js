@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema({
     town: {
         type: String
     },
+    postal_code: {
+        type: String
+    },
     mobile: {
         type: String
     },
@@ -36,11 +39,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
+    //field to add cart items
     product: [{
         type: ObjectId,
         ref: 'Product',
         required: false
     }],
+    //field to add wishlist items
     wishlist: [{
         type: ObjectId,
         ref: 'Product',
