@@ -11,7 +11,7 @@ const { getUserById } = require("../controllers/user");
 router.post("/category/create/:userId", requiredSignin, categoryValidator, isAuth, isStoreManager, create);
 router.get("/category/:categoryId", readById);
 router.put("/category/:categoryId/:userId", requiredSignin, categoryValidator, isAuth, isAdmin, updateById);
-router.delete("/category/:categoryId/:userId", requiredSignin, categoryValidator, isAuth, isAdmin, removeById);
+router.delete("/category/:categoryId/:userId", requiredSignin, isAuth, isAdmin, removeById);
 router.get("/categories", list);
 
 //routes for userID and categoryID
