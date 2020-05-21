@@ -91,15 +91,6 @@ exports.update = (req, res) => {
                 error: "Image could not be uploaded"
             });
         }
-        // Check for all the variables
-        const {name, description, category, price, currency, quantity, takeInMethod} = fields;
-
-        // Validating the variables
-        if(!name || !description || !category || !price || !currency || !quantity || !takeInMethod){
-            return res.status(400).json({
-                error: "Complete all fields!"
-            });
-        }
 
         // Accessing the existing product
         let product = req.product;
