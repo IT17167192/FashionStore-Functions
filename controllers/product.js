@@ -83,11 +83,9 @@ exports.remove = (req, res) => {
 
 // Update Product
 exports.update = (req, res) => {
-    console.log("calling fuck");
     let form = new formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {
-        console.log("coming to update");
         if(err){
             return res.status(400).json({
                 error: "Image could not be uploaded"
