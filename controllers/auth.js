@@ -168,7 +168,7 @@ exports.newsletterSignUp = (req, res) => {
     const data = {
         members: [{
             email_address: email,
-            status: 'subscribed',
+            status: '3',
         }]
     };
 

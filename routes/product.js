@@ -12,7 +12,7 @@ const { getUserById } = require("../controllers/user");
 router.get("/product/:productId", read); // Read Product - get request
 router.post("/product/create/:userId", requiredSignin, isAuth, isStoreManager, create); // Create Product - post request
 router.delete('/product/:productId/:userId', requiredSignin, isAuth, isAdmin, remove); // Delete Product - delete request
-router.put('/product/:productId/:userId', requiredSignin, isAuth, update); // Update Product - put request
+router.put('/product/:productId/:userId', requiredSignin, isAuth, isStoreManager, update); // Update Product - put request
 router.put('/product/addRating/:productId/:userId', requiredSignin, isAuth, addRating); // add Rating to a product - put request
 router.put('/product/addComment/:productId/:userId', requiredSignin, isAuth, addComment); // add Rating to a product - put request
 
