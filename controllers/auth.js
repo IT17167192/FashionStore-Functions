@@ -117,6 +117,16 @@ exports.isAdmin = (req, res, next) => {
     next();
 };
 
+exports.isActive = (req, res, next) => {
+    if(req.profile.status === "0"){
+        return res.status(403).json({
+            error: "Inactive User. Access denied!"
+        });
+    }
+
+    next();
+};
+
 //store manager routes authentication middleware
 exports.isStoreManager = (req, res, next) => {
     if(req.profile.role === "0"){
@@ -128,4 +138,19 @@ exports.isStoreManager = (req, res, next) => {
     if(req.profile.role === "1" || req.profile.role === "2"){
         next();
     }
+};
+
+exports.changeState = (req, res) => {
+    User.findOneAndUpdate({_id: req.body._id}, {state: req.body.state}, {new: true}, (err, user) => {
+        if (err) {
+            return res.status(400).json({
+                error: 'Unauthorized Action!'
+            })
+        }
+
+        user.hashed_password = undefined;
+        user.salt = undefined;
+
+        res.json(user);
+    });
 };

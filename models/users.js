@@ -56,6 +56,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 0
     },
+    state: {
+        type: String,
+        default: 1
+    },
     history: {
         type: Array,
         default: []

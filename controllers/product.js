@@ -91,7 +91,6 @@ exports.update = (req, res) => {
                 error: "Image could not be uploaded"
             });
         }
-
         // Check for all the variables
         const {name, description, category, price, currency, quantity, takeInMethod} = fields;
 
