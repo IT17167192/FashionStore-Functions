@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 //controller references
-const { getUserById, read, address, update, removeItemById, removeWishListItem, updateWishList } = require("../controllers/user");
+const { getUserById, read, address, update, removeItemById, removeWishListItem, updateWishList, getAllUsers } = require("../controllers/user");
 const { requiredSignin, isAuth, isStoreManager } = require('../controllers/auth');
 
 
@@ -16,6 +16,7 @@ router.get('/secret/:userId', requiredSignin, isAuth, isStoreManager, (req, res)
     });
 });
 
+router.get('/users', getAllUsers);
 router.get('/user/:userId', requiredSignin, isAuth, read);  //url to get user profile
 router.get('/address/:userId', requiredSignin, isAuth, address);    //to get user address
 router.put('/user/:userId', requiredSignin, isAuth, update);    //to update user details

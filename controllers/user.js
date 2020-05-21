@@ -123,3 +123,20 @@ exports.updateWishList = (req, res) => {
         res.json(user);
     });
 };
+
+exports.getAllUsers = (req, res) => {
+    let orderBy = req.query.orderBy ? req.query.orderBy:'ASC';
+    let sortBy = req.query.sortBy ? req.query.sortBy:'_id';
+
+    User.find()
+        .sort([[sortBy, orderBy]])
+        .exec((err, data) => {
+            if(err){
+                res.status(400).json({
+                    error: 'Users not found!'
+                });
+            }
+
+            res.json(data);
+        });
+};
