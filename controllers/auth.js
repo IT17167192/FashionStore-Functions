@@ -107,9 +107,32 @@ exports.isAuth = (req, res, next) => {
     next();
 };
 
+//authentication middleware
+exports.isAuthCheckForAdminOperations = (req, res, next) => {
+    let user = req.adminProfile && req.auth && req.adminProfile._id == req.auth._id;
+    if(!user){
+        return res.status(403).json({
+            error: "Access denied"
+        });
+    }
+
+    next();
+};
+
 //admin routes authentication middleware
 exports.isAdmin = (req, res, next) => {
     if(req.profile.role === "0" || req.profile.role === "2"){
+        return res.status(403).json({
+            error: "Not a admin. Access denied!"
+        });
+    }
+
+    next();
+};
+
+//admin routes authentication middleware
+exports.isAdminCheckForResetPassword = (req, res, next) => {
+    if(req.adminProfile.role === "0" || req.adminProfile.role === "2"){
         return res.status(403).json({
             error: "Not a admin. Access denied!"
         });
