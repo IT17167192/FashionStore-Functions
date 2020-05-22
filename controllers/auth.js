@@ -10,21 +10,21 @@ const Handlebars = require('handlebars');
 exports.signup = (req, res) => {
     const user = new User(req.body);
     user.save((err, user) => {
-        if(err){
+        if (err) {
             return res.status(400).json({error: errorHandler(err)});
         }
         user.salt = undefined;
         user.hash_password = undefined;
         res.json({
-           user
+            user
         });
 
-        if(typeof req.body.role !== 'undefined' && req.body.role === 2){
+        if (typeof req.body.role !== 'undefined' && req.body.role === 2) {
             let transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user:process.env.EMAIL,
-                    pass:process.env.PASSWORD
+                    user: process.env.EMAIL,
+                    pass: process.env.PASSWORD
                 }
             });
 
@@ -53,9 +53,9 @@ exports.signup = (req, res) => {
             };
 
             transporter.sendMail(emailOptions, function (err, success) {
-                if(err){
+                if (err) {
                     console.log(err);
-                }else{
+                } else {
                     console.log("Email sent successfully");
                 }
             });
@@ -67,15 +67,22 @@ exports.signin = (req, res) => {
     //find the user based on email
     const {email, password} = req.body;
     User.findOne({email}, (err, user) => {
-        if(err || !user){
+        if (err || !user) {
             return res.status(400).json({error: 'User does not exist!'});
         }
         //authenticate the user
-        if(!user.auth(password)){
+        if (!user.auth(password)) {
             return res.status(401).json({
                 error: 'Incorrect credentials!'
             });
         }
+        //authenticate the user
+        if (user.state === '0') {
+            return res.status(401).json({
+                error: "Inactive User. Access denied!"
+            });
+        }
+        console.log("Hi: " + user.state);
         //if authenticated generate a token with uid and secret
         const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET);
         //add to cookie with expiry date
@@ -98,7 +105,7 @@ exports.requiredSignin = expressJwt({secret: process.env.JWT_SECRET, userPropert
 exports.isAuth = (req, res, next) => {
     console.log(req);
     let user = req.profile && req.auth && req.profile._id == req.auth._id;
-    if(!user){
+    if (!user) {
         return res.status(403).json({
             error: "Access denied"
         });
@@ -110,7 +117,7 @@ exports.isAuth = (req, res, next) => {
 //authentication middleware
 exports.isAuthCheckForAdminOperations = (req, res, next) => {
     let user = req.adminProfile && req.auth && req.adminProfile._id == req.auth._id;
-    if(!user){
+    if (!user) {
         return res.status(403).json({
             error: "Access denied"
         });
@@ -121,7 +128,7 @@ exports.isAuthCheckForAdminOperations = (req, res, next) => {
 
 //admin routes authentication middleware
 exports.isAdmin = (req, res, next) => {
-    if(req.profile.role === "0" || req.profile.role === "2"){
+    if (req.profile.role === "0" || req.profile.role === "2") {
         return res.status(403).json({
             error: "Not a admin. Access denied!"
         });
@@ -132,19 +139,9 @@ exports.isAdmin = (req, res, next) => {
 
 //admin routes authentication middleware
 exports.isAdminCheckForResetPassword = (req, res, next) => {
-    if(req.adminProfile.role === "0" || req.adminProfile.role === "2"){
+    if (req.adminProfile.role === "0" || req.adminProfile.role === "2") {
         return res.status(403).json({
             error: "Not a admin. Access denied!"
-        });
-    }
-
-    next();
-};
-
-exports.isActive = (req, res, next) => {
-    if(req.profile.status === "0"){
-        return res.status(403).json({
-            error: "Inactive User. Access denied!"
         });
     }
 
@@ -153,13 +150,13 @@ exports.isActive = (req, res, next) => {
 
 //store manager routes authentication middleware
 exports.isStoreManager = (req, res, next) => {
-    if(req.profile.role === "0"){
+    if (req.profile.role === "0") {
         return res.status(403).json({
             error: "Not a admin. Access denied!"
         });
     }
 
-    if(req.profile.role === "1" || req.profile.role === "2"){
+    if (req.profile.role === "1" || req.profile.role === "2") {
         next();
     }
 };
@@ -182,7 +179,7 @@ exports.changeState = (req, res) => {
 exports.newsletterSignUp = (req, res) => {
     const email = req.body.email;
     console.log(email);
-    if(!email){
+    if (!email) {
         return res.status(401).json({
             error: "Email required"
         });
@@ -207,14 +204,14 @@ exports.newsletterSignUp = (req, res) => {
     };
 
     request(options, (err, response, body) => {
-        if(err){
+        if (err) {
             return res.status(401).json({
                 error: "Error in network connection!"
             });
-        }else{
-            if(response.statusCode = 200){
+        } else {
+            if (response.statusCode = 200) {
                 res.json(body);
-            }else{
+            } else {
                 return res.status(401).json({
                     error: "Error in network connection!"
                 });
