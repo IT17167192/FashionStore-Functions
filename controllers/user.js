@@ -1,4 +1,7 @@
 const User = require('../models/users');
+const generator = require('generate-password');
+const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars');
 
 exports.getUserById = (req, res, next, id) => {
     User.findById(id).populate('product').exec((err, user) => {
@@ -9,6 +12,19 @@ exports.getUserById = (req, res, next, id) => {
         }
 
         req.profile = user;
+        next();
+    });
+};
+
+exports.getAdminByAdminId = (req, res, next, id) => {
+    User.findById(id).populate('product').exec((err, user) => {
+        if (err || !user) {
+            res.status(400).json({
+                error: 'User not found!'
+            });
+        }
+
+        req.adminProfile = user;
         next();
     });
 };
@@ -59,6 +75,64 @@ exports.address = (req, res) => {
         town: req.profile.town,
         postal_code: req.profile.postal_code,
         mobile: req.profile.mobile
+    });
+};
+
+//method to reset password
+exports.resetPassword = (req, res) => {
+    console.log("reset password function");
+    const user = req.profile;
+    const randomPassword = generator.generate({
+        length: 10,
+        numbers: true
+    });
+    user.password = randomPassword;
+    console.log(randomPassword);
+
+    user.save((err, data) => {
+        if(err){
+            return res.status(400).json({
+                error:errorHandler(err)
+            });
+        }
+        res.json(data);
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user:process.env.EMAIL,
+                pass:process.env.PASSWORD
+            }
+        });
+
+        transporter.use('compile', hbs({
+            viewEngine: {
+                extName: '.handlebars',
+                partialsDir: './email_views/',
+                layoutsDir: './email_views/',
+                defaultLayout: '',
+            },
+            viewPath: './email_views/',
+            extName: '.handlebars',
+        }));
+
+        let emailOptions = {
+            from: process.env.EMAIL,
+            to: user.email,
+            cc: process.env.EMAIL,
+            subject: 'Password Reset',
+            template: 'reset_password_email_view',
+            context: {
+                password: randomPassword
+            }
+        };
+
+        transporter.sendMail(emailOptions, function (err, success) {
+            if(err){
+                console.log(err);
+            }else{
+                console.log("Email sent successfully");
+            }
+        });
     });
 };
 

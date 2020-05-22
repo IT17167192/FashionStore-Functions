@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
     },
     state: {
         type: String,
-        default: 1
+        default: '1'
     },
     history: {
         type: Array,

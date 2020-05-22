@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 //controller references
-const { getUserById, read, address, update, removeItemById, removeWishListItem, updateWishList, getAllUsers } = require("../controllers/user");
-const { requiredSignin, isAuth, isStoreManager } = require('../controllers/auth');
+const { getUserById, getAdminByAdminId, read, address, update, removeItemById, removeWishListItem, updateWishList, getAllUsers, resetPassword } = require("../controllers/user");
+const { requiredSignin, isAuth, isStoreManager, isAdminCheckForResetPassword, isAuthCheckForAdminOperations } = require('../controllers/auth');
 
 
 //routes
@@ -23,8 +23,9 @@ router.put('/user/:userId', requiredSignin, isAuth, update);    //to update user
 router.put('/wishlist/:userId', requiredSignin, isAuth, updateWishList);    //to update wishlist
 router.post('/cart/remove/:userId', requiredSignin, isAuth, removeItemById);    //to remove cart items
 router.post('/wishlist/remove/:userId', requiredSignin, isAuth, removeWishListItem);    //to remove wishlist items
-
+router.put('/user/resetPassword/:userId/:adminId', requiredSignin, isAuthCheckForAdminOperations, isAdminCheckForResetPassword, resetPassword);
 //get user id as parameter
 router.param('userId', getUserById);
+router.param('adminId', getAdminByAdminId);
 
 module.exports = router;
