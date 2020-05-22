@@ -117,7 +117,7 @@ exports.resetPassword = (req, res) => {
 
         let emailOptions = {
             from: process.env.EMAIL,
-            to: req.body.email,
+            to: user.email,
             cc: process.env.EMAIL,
             subject: 'Password Reset',
             template: 'reset_password_email_view',
