@@ -4,12 +4,15 @@ const {userSignupValidator} = require('../validators');
 
 //controller references
 const { create, getProductById, read, remove, update, addRating, addComment
-    , getAllProducts, getSimilarProduct, getProductCategories, getProductListBySearch, getImage } = require("../controllers/product");
+    , getAllProducts, getSimilarProduct, getProductCategories, getProductListBySearch, getImage, getProductsByCategory } = require("../controllers/product");
 const { requiredSignin, isAuth, isAdmin, isStoreManager } = require('../controllers/auth');
 const { getUserById } = require("../controllers/user");
+//controller references
+const { getCategoryById } = require("../controllers/category");
 
 //routes
 router.get("/product/:productId", read); // Read Product - get request
+router.get("/product/category/:categoryId", getProductsByCategory); // Read Product by category
 router.post("/product/create/:userId", requiredSignin, isAuth, isStoreManager, create); // Create Product - post request
 router.delete('/product/:productId/:userId', requiredSignin, isAuth, isAdmin, remove); // Delete Product - delete request
 router.put('/product/:productId/:userId', requiredSignin, isAuth, isStoreManager, update); // Update Product - put request
@@ -27,6 +30,7 @@ router.get('/product/image/:productId', getImage);
 //read by
 router.param("userId", getUserById);
 router.param("productId", getProductById);
+router.param("categoryId", getCategoryById);
 
 
 
