@@ -207,6 +207,22 @@ exports.getSimilarProduct = (req, res) => {
         });
 };
 
+exports.getProductsByCategory = (req, res) => {
+    let limitTo = req.query.limitTo ? parseInt(req.query.limitTo):10;
+    Product.find({category: req.category})
+        .populate('category', '_id name')
+        .limit(limitTo)
+        .exec((err, data) => {
+            if(err){
+                res.status(400).json({
+                    error: 'Products not found'
+                });
+            }
+
+            res.json(data);
+        });
+};
+
 exports.getProductCategories = (req, res) => {
   Product.distinct("category", {}, (err, data) => {
       if(err){
