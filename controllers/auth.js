@@ -6,6 +6,7 @@ const {errorHandler} = require('../helpers/dbErrorHandler');
 const nodemailer = require('nodemailer');
 const hbs = require('nodemailer-express-handlebars');
 const Handlebars = require('handlebars');
+const lodash = require('lodash');
 
 exports.signup = (req, res) => {
     const user = new User(req.body);
@@ -219,3 +220,97 @@ exports.newsletterSignUp = (req, res) => {
         }
     });
 }
+
+exports.forgotPassword = (req, res) => {
+
+    const {email} = req.body;
+
+    User.findOne({email}, (err, user) => {
+        if (err || !user) {
+            return res.status(400).json({error: "User with this email does not exists!"});
+        }
+
+        const token = jwt.sign({_id: user._id}, process.env.JWT_FORGOT_PASSWORD_SECRET);
+        //add to cookie with expiry date
+        res.cookie('t', token, {expire: new Date() + 9999});
+
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD
+            }
+        });
+
+        transporter.use('compile', hbs({
+            viewEngine: {
+                extName: '.handlebars',
+                partialsDir: './email_views/',
+                layoutsDir: './email_views/',
+                defaultLayout: '',
+            },
+            viewPath: './email_views/',
+            extName: '.handlebars',
+        }));
+
+        let emailOptions = {
+            from: 'noreply@quarantinefashionstore.com',
+            to: email,
+            cc: process.env.EMAIL,
+            subject: 'Account activation link',
+            template: 'forgot_password_email_view',
+            context: {
+                link: `${process.env.CLIENT_URL}/reset/password/${token}`,
+            }
+        };
+
+
+        return user.updateOne({resetLink: token}, (err, success) => {
+            if (err) {
+                return res.status(400).json({error: "Reset password link error!"});
+            }else{
+                transporter.sendMail(emailOptions, function (err, success) {
+                    if (err) {
+                        console.log(err);
+                        return res.json({error: "Email not found!"});
+                    } else {
+                        console.log("Email sent successfully");
+                        return res.json({message: 'Email is sent to the email address!'});
+                    }
+                });
+            }
+        });
+
+    });
+};
+
+exports.resetPasswordByLink = (req, res) => {
+  const {resetLink, newPassword} = req.body;
+  if(resetLink){
+        jwt.verify(resetLink, process.env.JWT_FORGOT_PASSWORD_SECRET, (error, data) => {
+            if(error){
+                return res.status(400).json({error : "Incorrect or expired!"});
+            }
+           User.findOne({resetLink}, (err,user) => {
+               if(err || !user){
+                   return res.status(400).json({error : "Cannot find the user with this token!"});
+               }
+              const obj = {
+                password : newPassword
+              };
+
+               user = lodash.extend(user, obj);
+               user.save((err, result) => {
+                   if (err){
+                       return res.status(400).json({error : "reset password error"})
+                   }else{
+                       return res.status(200).json({message: "Your password is changed!"})
+                   }
+               })
+
+           });
+        });
+  }else{
+      return res.status(401).json({error : "Unauthorized!"});
+  }
+};

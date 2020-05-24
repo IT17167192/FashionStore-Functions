@@ -63,6 +63,10 @@ const userSchema = new mongoose.Schema({
     history: {
         type: Array,
         default: []
+    },
+    resetLink: {
+        type: String,
+        default: ''
     }
 }, {timestamps: true});
 
