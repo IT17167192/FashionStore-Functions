@@ -82,7 +82,7 @@ exports.signin = (req, res) => {
                 error: "Inactive User. Access denied!"
             });
         }
-        console.log("Hi: " + user.state);
+
         //if authenticated generate a token with uid and secret
         const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET);
         //add to cookie with expiry date
