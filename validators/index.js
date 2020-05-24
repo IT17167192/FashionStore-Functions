@@ -26,6 +26,7 @@ exports.userSignupValidator = (req, res, next) => {
     next();
 };
 
+//category validations
 exports.categoryValidator = (req, res, next) => {
     req.check('name', 'Category must be added!').notEmpty()
         .isLength({

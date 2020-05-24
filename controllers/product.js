@@ -4,6 +4,7 @@ const Product = require('../models/product');
 const fs = require('fs');
 const {errorHandler} = require('../helpers/dbErrorHandler');
 
+//get product by Id
 exports.getProductById = (req, res, next, id) => {
     Product.findById(id).populate('category').populate('comments.user').exec((err, product) => {
         if(err || !product){
@@ -17,6 +18,7 @@ exports.getProductById = (req, res, next, id) => {
     });
 };
 
+//product image read
 exports.read = (req, res) => {
     req.product.image = undefined;
     return res.json(req.product);
@@ -100,6 +102,7 @@ exports.update = (req, res) => {
 
         // Image validation
         if(files.image){
+
             if(files.image.size > 5000000){
                 return res.status(400).json({
                     error: "Image size is too large. Upload an image <5MB"
@@ -121,6 +124,7 @@ exports.update = (req, res) => {
     });
 };
 
+//add rating to product
 exports.addRating = (req, res) => {
     let updateSet = {$push: {}};  //push used to push data to the array
 
@@ -142,6 +146,7 @@ exports.addRating = (req, res) => {
     });
 };
 
+// add comment to product
 exports.addComment = (req, res) => {
     let updateSet = {$push: {}};  //add to set used to not to replace existing rates
 
@@ -168,6 +173,7 @@ exports.addComment = (req, res) => {
     });
 };
 
+//get all products
 exports.getAllProducts = (req, res) => {
   let orderBy = req.query.orderBy ? req.query.orderBy:'ASC';
   let sortBy = req.query.sortBy ? req.query.sortBy:'_id';
@@ -189,6 +195,7 @@ exports.getAllProducts = (req, res) => {
       });
 };
 
+//get similar product
 exports.getSimilarProduct = (req, res) => {
     let limitTo = req.query.limitTo ? parseInt(req.query.limitTo):10;
 
@@ -206,6 +213,7 @@ exports.getSimilarProduct = (req, res) => {
         });
 };
 
+//get products by category
 exports.getProductsByCategory = (req, res) => {
     let limitTo = req.query.limitTo ? parseInt(req.query.limitTo):10;
     Product.find({category: req.category})
@@ -222,6 +230,7 @@ exports.getProductsByCategory = (req, res) => {
         });
 };
 
+//get category
 exports.getProductCategories = (req, res) => {
   Product.distinct("category", {}, (err, data) => {
       if(err){
@@ -234,6 +243,7 @@ exports.getProductCategories = (req, res) => {
   });
 };
 
+//get product list by searching
 exports.getProductListBySearch = (req, res) => {
     let orderBy = req.body.orderBy ? req.body.orderBy : "asc";
     let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
@@ -275,6 +285,7 @@ exports.getProductListBySearch = (req, res) => {
         });
 };
 
+//get product image
 exports.getImage = (req, res, next) => {
 
     if(req.product.image.data){
@@ -286,6 +297,7 @@ exports.getImage = (req, res, next) => {
 
 };
 
+//decrease product quantity
 exports.decreaseQuantity = (req, res, next) => {
     let bulkOps = req.body.order.products.map((item) => {
         return{
